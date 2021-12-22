@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "toothlessblue-my-first-mod",
+  "version": "${version}",
+
+  "name": "My First Mod",
+  "description": "The first mod I've made",
+  "authors": [
+    "toothlessblue!"
+  ],
+  "contact": {
+    "homepage": "https://fabricmc.net/",
+    "sources": "https://github.com/FabricMC/fabric-example-mod"
+  },
+
+  "license": "CC0-1.0",
+  "icon": "assets/toothlessblue-my-first-mod/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.fabricmc.MyFirstMod.MyFirstMod"
+    ]
+  },
+  "mixins": [
+    "toothlessblue-my-first-mod.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.11.3",
+    "fabric": "*",
+    "minecraft": "1.18.x",
+    "java": ">=17"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}
