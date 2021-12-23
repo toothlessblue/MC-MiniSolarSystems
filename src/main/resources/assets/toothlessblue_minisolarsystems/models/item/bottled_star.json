@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "toothlessblue_minisolarsystems:item/bottled_star"
+  }
+}

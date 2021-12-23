@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "id": "toothlessblue-my-first-mod",
+  "id": "toothlessblue_minisolarsystems",
   "version": "${version}",
 
-  "name": "My First Mod",
-  "description": "The first mod I've made",
+  "name": "Mini Solar Systems",
+  "description": "Build little solar systems to manage and grow!",
   "authors": [
     "toothlessblue!"
   ],
@@ -14,16 +14,16 @@
   },
 
   "license": "CC0-1.0",
-  "icon": "assets/toothlessblue-my-first-mod/icon.png",
+  "icon": "assets/toothlessblue_minisolarsystems/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.fabricmc.MyFirstMod.MyFirstMod"
+      "net.fabricmc.MiniSolarSystems.MiniSolarSystems"
     ]
   },
   "mixins": [
-    "toothlessblue-my-first-mod.mixins.json"
+    "toothlessblue_minisolarsystems.mixins.json"
   ],
 
   "depends": {
