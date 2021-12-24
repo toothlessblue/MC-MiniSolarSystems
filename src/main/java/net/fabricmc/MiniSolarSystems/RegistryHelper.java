@@ -1,6 +1,9 @@
 package net.fabricmc.MiniSolarSystems;
 
+import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.Block;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
@@ -22,5 +25,13 @@ public final class RegistryHelper {
     public static <T extends Block> T register(String blockId, T block) {
         Registry.register(Registry.BLOCK, new Identifier(RegistryHelper.namespace, blockId), block);
         return block;
+    }
+
+    public static <T extends BlockEntity> BlockEntityType<T> register(String blockEntityId, FabricBlockEntityTypeBuilder<T> blockEntityBuilder) {
+        return Registry.register(
+                Registry.BLOCK_ENTITY_TYPE,
+                RegistryHelper.namespace + ":" + blockEntityId,
+                blockEntityBuilder.build(null)
+        );
     }
 }

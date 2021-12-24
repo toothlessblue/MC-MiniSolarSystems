@@ -4,27 +4,35 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.Material;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class MiniSolarSystems implements ModInitializer {
-	private static final ItemGroup itemGroup = FabricItemGroupBuilder.build(new Identifier("toothlessblue_minisolarsystems", "general"),
-			() -> new ItemStack(MiniSolarSystems.itemBottledStar)
+	public static BlockEntityType<StarBlockEntity> starBlockEntity;
+
+	public static final ItemGroup itemGroup = FabricItemGroupBuilder.build(new Identifier("toothlessblue_minisolarsystems", "general"),
+			() -> new ItemStack(MiniSolarSystems.bottledStarItem)
 	);
 
-	public static final BlockStar blockStar = new BlockStar(FabricBlockSettings
+	public static final StarBlock starBlock = new StarBlock(FabricBlockSettings
 			.of(Material.WOOL)
 			.strength(0.8f)
 			.allowsSpawning((blockState, blockView, blockPos, entityType) -> false)
 			.breakByHand(true)
 			.dropsNothing()
+			.sounds(BlockSoundGroup.WOOL)
+			.nonOpaque()
+			.solidBlock((blockState, blockView, blockPos) -> false)
 	);
 
-	public static final ItemBottledStar itemBottledStar = new ItemBottledStar(MiniSolarSystems.blockStar, new FabricItemSettings()
+	public static final BottledStarItem bottledStarItem = new BottledStarItem(MiniSolarSystems.starBlock, new FabricItemSettings()
 			.group(MiniSolarSystems.itemGroup)
 	);
 
@@ -42,7 +50,10 @@ public class MiniSolarSystems implements ModInitializer {
 		LOGGER.info("Hello Fabric world!");
 
 		RegistryHelper.initialise("toothlessblue_minisolarsystems");
-		RegistryHelper.register("bottled_star", itemBottledStar);
-		RegistryHelper.register("star", blockStar);
+		RegistryHelper.register("bottled_star", bottledStarItem);
+		RegistryHelper.register("star", starBlock);
+
+		starBlockEntity = RegistryHelper.register("star_entity", FabricBlockEntityTypeBuilder.create(StarBlockEntity::new, starBlock));
+
 	}
 }

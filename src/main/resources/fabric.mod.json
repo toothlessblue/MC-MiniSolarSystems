@@ -20,6 +20,9 @@
   "entrypoints": {
     "main": [
       "net.fabricmc.MiniSolarSystems.MiniSolarSystems"
+    ],
+    "client": [
+      "net.fabricmc.MiniSolarSystems.MiniSolarSystemsClient"
     ]
   },
   "mixins": [
