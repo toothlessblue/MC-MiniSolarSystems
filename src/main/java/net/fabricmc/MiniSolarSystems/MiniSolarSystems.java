@@ -30,6 +30,7 @@ public class MiniSolarSystems implements ModInitializer {
 			.sounds(BlockSoundGroup.WOOL)
 			.nonOpaque()
 			.solidBlock((blockState, blockView, blockPos) -> false)
+			.luminance(10)
 	);
 
 	public static final BottledStarItem bottledStarItem = new BottledStarItem(MiniSolarSystems.starBlock, new FabricItemSettings()
@@ -53,7 +54,7 @@ public class MiniSolarSystems implements ModInitializer {
 		RegistryHelper.register("bottled_star", bottledStarItem);
 		RegistryHelper.register("star", starBlock);
 
-		starBlockEntity = RegistryHelper.register("star_entity", FabricBlockEntityTypeBuilder.create(StarBlockEntity::new, starBlock));
+		starBlockEntity = RegistryHelper.register("star", FabricBlockEntityTypeBuilder.create(StarBlockEntity::new, starBlock));
 
 	}
 }

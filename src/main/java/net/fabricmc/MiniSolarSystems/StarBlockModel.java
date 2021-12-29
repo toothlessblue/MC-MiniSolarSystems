@@ -51,6 +51,7 @@ public class StarBlockModel implements UnbakedModel, BakedModel, FabricBakedMode
         // Build the mesh using the Renderer API
         Renderer renderer = RendererAccess.INSTANCE.getRenderer();
         MeshBuilder builder = renderer.meshBuilder();
+
         QuadEmitter emitter = builder.getEmitter();
 
         for(Direction direction : Direction.values()) {

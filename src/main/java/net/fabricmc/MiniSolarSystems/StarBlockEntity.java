@@ -6,9 +6,15 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
+
 public class StarBlockEntity extends BlockEntity {
+    private ArrayList<Planet> planets = new ArrayList<Planet>();
+
     public StarBlockEntity(BlockPos pos, BlockState state) {
         super(MiniSolarSystems.starBlockEntity, pos, state);
+
+        this.planets.add(new Planet());
     }
 
     // Executed once per tick c:
