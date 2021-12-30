@@ -5,6 +5,8 @@ import net.fabricmc.fabric.api.renderer.v1.RendererAccess;
 import net.fabricmc.fabric.api.renderer.v1.material.RenderMaterial;
 import net.fabricmc.fabric.api.renderer.v1.mesh.MeshBuilder;
 import net.fabricmc.fabric.api.renderer.v1.mesh.QuadEmitter;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
@@ -17,6 +19,9 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.math.Vec3f;
+import net.minecraft.world.BlockRenderView;
+
+import java.util.Random;
 
 public class StarBlockEntityRenderer implements BlockEntityRenderer<StarBlockEntity> {
     private static ItemStack stack = new ItemStack(Items.DIRT, 1);
@@ -43,8 +48,21 @@ public class StarBlockEntityRenderer implements BlockEntityRenderer<StarBlockEnt
         // Rotate the planet
         matrices.multiply(new Vec3f(0.2f, 1, 0).getDegreesQuaternion((blockEntity.getWorld().getTime() + tickDelta) * PLANET_ROTATION_SPEED));
 
+        // Scale the planet
+        matrices.scale(0.25f, 0.25f, 0.25f);
+
         // Render the "planet"
-        MinecraftClient.getInstance().getItemRenderer().renderItem(stack, ModelTransformation.Mode.GROUND, light, overlay, matrices, vertexConsumers, 0);
+        VertexConsumer consumer = vertexConsumers.getBuffer(RenderLayer.getTranslucentMovingBlock());
+
+        MinecraftClient.getInstance().getBlockRenderManager().renderBlock(
+                Block.getBlockFromItem(Items.DIRT).getDefaultState(),
+                blockEntity.getPos(),
+                blockEntity.getWorld(),
+                matrices,
+                consumer,
+                false,
+                new Random()
+        );
 
         // Mandatory call after GL calls
         matrices.pop();
