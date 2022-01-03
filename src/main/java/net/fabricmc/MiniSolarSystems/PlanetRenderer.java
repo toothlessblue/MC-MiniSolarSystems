@@ -45,10 +45,37 @@ public class PlanetRenderer {
 
         GL11.glBindTexture(GL11.GL_TEXTURE, this.textureIds[0]);
         VertexConsumer consumer = vertexConsumers.getBuffer(RenderLayer.getSolid());
-        consumer.vertex(0, 0, 1).color(1,0,1, 1).texture(0, 0).light(0, 1).normal(0, 0, 1).next();
-        consumer.vertex(0, 1, 1).color(1,0,1, 1).texture(1, 0).light(0, 1).normal(0, 0, 1).next();
-        consumer.vertex(1, 1, 1).color(1,0,1, 1).texture(1, 1).light(0, 1).normal(0, 0, 1).next();
-        consumer.vertex(1, 0, 1).color(1,0,1, 1).texture(0, 1).light(0, 1).normal(0, 0, 1).next();
+        Matrix4f position = matrices.peek().getPositionMatrix();
+
+        consumer.vertex(position, 0, 0, 1).color(1,1,1, 1).texture(0, 0).light(0, 255).normal(0, 0, -1).next();
+        consumer.vertex(position, 0, 1, 1).color(1,1,1, 1).texture(1, 0).light(0, 255).normal(0, 0, -1).next();
+        consumer.vertex(position, 1, 1, 1).color(1,1,1, 1).texture(1, 1).light(0, 255).normal(0, 0, -1).next();
+        consumer.vertex(position, 1, 0, 1).color(1,1,1, 1).texture(0, 1).light(0, 255).normal(0, 0, -1).next();
+
+        consumer.vertex(position, 0, 0, 0).color(1,1,1, 1).texture(0, 0).light(0, 255).normal(0, 0, 1).next();
+        consumer.vertex(position, 0, 1, 0).color(1,1,1, 1).texture(1, 0).light(0, 255).normal(0, 0, 1).next();
+        consumer.vertex(position, 1, 1, 0).color(1,1,1, 1).texture(1, 1).light(0, 255).normal(0, 0, 1).next();
+        consumer.vertex(position, 1, 0, 0).color(1,1,1, 1).texture(0, 1).light(0, 255).normal(0, 0, 1).next();
+
+        consumer.vertex(position, 1, 0, 0).color(1,1,1, 1).texture(0, 0).light(0, 255).normal(0, 0, 0).next();
+        consumer.vertex(position, 1, 1, 0).color(1,1,1, 1).texture(1, 0).light(0, 255).normal(0, 0, 0).next();
+        consumer.vertex(position, 1, 1, 1).color(1,1,1, 1).texture(1, 1).light(0, 255).normal(0, 0, 0).next();
+        consumer.vertex(position, 1, 0, 1).color(1,1,1, 1).texture(0, 1).light(0, 255).normal(0, 0, 0).next();
+
+        consumer.vertex(position, 0, 0, 0).color(1,1,1, 1).texture(0, 0).light(0, 255).normal(0, 0, 0).next();
+        consumer.vertex(position, 0, 1, 0).color(1,1,1, 1).texture(1, 0).light(0, 255).normal(0, 0, 0).next();
+        consumer.vertex(position, 0, 1, 1).color(1,1,1, 1).texture(1, 1).light(0, 255).normal(0, 0, 0).next();
+        consumer.vertex(position, 0, 0, 1).color(1,1,1, 1).texture(0, 1).light(0, 255).normal(0, 0, 0).next();
+
+        consumer.vertex(position, 0, 1, 0).color(1,1,1, 1).texture(0, 0).light(0, 255).normal(0, 0, -1).next();
+        consumer.vertex(position, 0, 1, 1).color(1,1,1, 1).texture(1, 0).light(0, 255).normal(0, 0, -1).next();
+        consumer.vertex(position, 1, 1, 0).color(1,1,1, 1).texture(1, 1).light(0, 255).normal(0, 0, -1).next();
+        consumer.vertex(position, 1, 1, 1).color(1,1,1, 1).texture(0, 1).light(0, 255).normal(0, 0, -1).next();
+
+        consumer.vertex(position, 0, 0, 0).color(1,1,1, 1).texture(0, 0).light(0, 255).normal(0, 0, -1).next();
+        consumer.vertex(position, 0, 0, 1).color(1,1,1, 1).texture(1, 0).light(0, 255).normal(0, 0, -1).next();
+        consumer.vertex(position, 1, 0, 1).color(1,1,1, 1).texture(1, 1).light(0, 255).normal(0, 0, -1).next();
+        consumer.vertex(position, 1, 0, 0).color(1,1,1, 1).texture(0, 1).light(0, 255).normal(0, 0, -1).next();
 
 
     }
