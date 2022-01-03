@@ -27,10 +27,9 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class StarBlockModel implements UnbakedModel, BakedModel, FabricBakedModel {
-    private static final SpriteIdentifier spriteId = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, new Identifier("toothlessblue_minisolarsystems:block/star"));
+    public static final SpriteIdentifier spriteId = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, new Identifier("toothlessblue_minisolarsystems:block/star"));
 
-    private Sprite sprite;
-
+    public Sprite sprite;
     private Mesh mesh;
 
     @Override

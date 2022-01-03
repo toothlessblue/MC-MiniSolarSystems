@@ -8,12 +8,16 @@ public class Planet {
     private float temperature;
     private float radius;
     private float waterLevel;
-    private Ecosystem ecosystem;
 
     private Stack<ItemStack> itemStackStack = new Stack<ItemStack>();
 
-    public Planet() {
-        this.ecosystem = new Ecosystem(this);
+    private StarBlockEntity star;
+
+    public PlanetRenderer renderer;
+
+    public Planet(StarBlockEntity star) {
+        //this.renderer = new PlanetRenderer(); // TODO Only if client!
+        this.star = star;
     }
 
     public void render() {

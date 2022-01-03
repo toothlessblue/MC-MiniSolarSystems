@@ -14,7 +14,7 @@ public class StarBlockEntity extends BlockEntity {
     public StarBlockEntity(BlockPos pos, BlockState state) {
         super(MiniSolarSystems.starBlockEntity, pos, state);
 
-        this.planets.add(new Planet());
+        this.planets.add(new Planet(this));
     }
 
     // Executed once per tick c:
