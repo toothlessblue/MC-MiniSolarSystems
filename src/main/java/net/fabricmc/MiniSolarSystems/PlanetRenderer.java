@@ -7,6 +7,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.Drawable;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.render.*;
+import net.minecraft.client.render.entity.PlayerEntityRenderer;
 import net.minecraft.client.texture.NativeImage;
 import net.minecraft.client.texture.TextureManager;
 import net.minecraft.client.util.math.MatrixStack;
@@ -16,6 +17,8 @@ import net.minecraft.util.math.Matrix4f;
 import net.minecraft.util.math.Vec3f;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
+import toothlessblue.Mesh;
+import toothlessblue.Vertex;
 
 import java.nio.IntBuffer;
 
@@ -41,11 +44,12 @@ public class PlanetRenderer {
 
         // render textures
 
-
-
         GL11.glBindTexture(GL11.GL_TEXTURE, this.textureIds[0]);
         VertexConsumer consumer = vertexConsumers.getBuffer(RenderLayer.getSolid());
         Matrix4f position = matrices.peek().getPositionMatrix();
+
+        Mesh mesh = new Mesh();
+        mesh.addVertex(new Vertex());
 
         consumer.vertex(position, 0, 0, 1).color(1,1,1, 1).texture(0, 0).light(0, 255).normal(0, 0, -1).next();
         consumer.vertex(position, 0, 1, 1).color(1,1,1, 1).texture(1, 0).light(0, 255).normal(0, 0, -1).next();
