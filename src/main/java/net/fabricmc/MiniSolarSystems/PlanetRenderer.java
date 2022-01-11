@@ -1,56 +1,46 @@
 package net.fabricmc.MiniSolarSystems;
 
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.platform.TextureUtil;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.Drawable;
-import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.render.*;
-import net.minecraft.client.render.entity.PlayerEntityRenderer;
-import net.minecraft.client.texture.NativeImage;
-import net.minecraft.client.texture.TextureManager;
+import net.minecraft.client.texture.NativeImageBackedTexture;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Matrix4f;
-import net.minecraft.util.math.Vec3f;
-import org.lwjgl.BufferUtils;
-import org.lwjgl.opengl.GL11;
-import toothlessblue.Mesh;
-import toothlessblue.Vertex;
-
-import java.nio.IntBuffer;
+import toothlessblue.TextureHelper;
 
 public class PlanetRenderer {
-    int[] textureIds = new int[6];
+    NativeImageBackedTexture texture;
+    Identifier dynamicTextureId;
+    int colour = 0;
 
     public PlanetRenderer() {
-        GL11.glGenTextures(this.textureIds);
+        this.texture = new NativeImageBackedTexture(96, 16, false);
+        TextureHelper.blackenNativeImage(this.texture.getImage());
+        this.texture.getImage().setColor(1,1, TextureHelper.RGBAtoINT(255, 0, 255));
+        this.dynamicTextureId = MinecraftClient.getInstance().getTextureManager().registerDynamicTexture("toothlessblue_minisolarsystems", texture);
 
-        for (int i = 0; i < 6; i++) {
-            RenderSystem.bindTextureForSetup(this.textureIds[i]);
-            IntBuffer buffer = BufferUtils.createIntBuffer(16 * 16 * 4);
-            TextureUtil.initTexture(buffer, 16, 16);
+    }
+
+    public void updateTexture() {
+        this.colour++;
+
+        if (this.colour > 255) {
+            this.colour = 0;
         }
+
+        this.texture.getImage().setColor(0, 0, TextureHelper.RGBAtoINT(this.colour, this.colour, this.colour));
+        this.texture.upload();
     }
 
-    private int getTexture(PlanetFace face) {
-        return textureIds[face.getValue()];
-    }
+    public void render(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int overlay, int light) {
+        this.updateTexture(); // TODO not to be called every frame, to be called every few seconds or so
 
-    public void render(MatrixStack matrices, VertexConsumerProvider vertexConsumers) {
-        // TODO update textures
-
-        // render textures
-
-        GL11.glBindTexture(GL11.GL_TEXTURE, this.textureIds[0]);
-        VertexConsumer consumer = vertexConsumers.getBuffer(RenderLayer.getSolid());
+        VertexConsumer consumer = vertexConsumers.getBuffer(RenderLayer.getEntitySolid(this.dynamicTextureId));
         Matrix4f position = matrices.peek().getPositionMatrix();
 
-        Mesh mesh = new Mesh();
-        mesh.addVertex(new Vertex());
-
-
+        consumer.vertex(position, 0, 0, 0).color(1f, 1f, 1f, 1f).texture(0f, 1f).overlay(overlay).light(light).normal(0, 0, 1).next();
+        consumer.vertex(position, 0, 1, 0).color(1f, 1f, 1f, 1f).texture(0f, 0f).overlay(overlay).light(light).normal(0, 0, 1).next();
+        consumer.vertex(position, 1, 1, 0).color(1f, 1f, 1f, 1f).texture(1f/6f, 0f).overlay(overlay).light(light).normal(0, 0, 1).next();
+        consumer.vertex(position, 1, 0, 0).color(1f, 1f, 1f, 1f).texture(1f/6f, 1f).overlay(overlay).light(light).normal(0, 0, 1).next();
     }
 }
