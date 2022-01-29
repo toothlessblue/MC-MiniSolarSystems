@@ -21,9 +21,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class StarBlockEntityRenderer implements BlockEntityRenderer<StarBlockEntity> {
-    private static ItemStack stack = new ItemStack(Items.DIRT, 1);
-
-    private static final float ORBIT_SECONDS_PER_DISTANCE = 10.0f;
+    private static final float ORBIT_SECONDS_PER_DISTANCE = 30.0f;
     private static final float ORBIT_DISTANCE = 2.5f;
     private static final float PLANET_ROTATION_SPEED = 1.0f;
     private static final float TIME_PER_ORBIT = ORBIT_DISTANCE * ORBIT_SECONDS_PER_DISTANCE;
@@ -33,26 +31,27 @@ public class StarBlockEntityRenderer implements BlockEntityRenderer<StarBlockEnt
     //      2.0f * (float)(Math.PI) / TIME_PER_ORBIT;
     private static final float ORBIT_SPEED = (float)(Math.PI) / (10.0f * TIME_PER_ORBIT);
 
-    private static final PlanetRenderer planetRenderer = new PlanetRenderer();
-
     @Override
     public void render(StarBlockEntity blockEntity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
         matrices.push();
 
         float time = (blockEntity.getWorld().getTime() + tickDelta) * ORBIT_SPEED;
 
-        //// Move the planet
-        //matrices.translate(ORBIT_DISTANCE * Math.cos(time) + 0.5f, 0.5f, ORBIT_DISTANCE * Math.sin(time) + 0.5f);
+        // Move the planet
+        matrices.translate(ORBIT_DISTANCE * Math.cos(time) + 0.5f, 0.5f, ORBIT_DISTANCE * Math.sin(time) + 0.5f);
 
-        //// Rotate the planet
-        //matrices.multiply(new Vec3f(0.2f, 1, 0).getDegreesQuaternion((blockEntity.getWorld().getTime() + tickDelta) * PLANET_ROTATION_SPEED));
+        // Rotate the planet
+        matrices.multiply(new Vec3f(0.2f, 1, 0).getDegreesQuaternion((blockEntity.getWorld().getTime() + tickDelta) * PLANET_ROTATION_SPEED));
 
-        //// Scale the planet
-        //matrices.scale(0.25f, 0.25f, 0.25f);
+        // Scale the planet
+        matrices.scale(0.25f, 0.25f, 0.25f);
 
-        // Render the "planet"
+        // TODO individual planet motion
 
-        planetRenderer.render(matrices, vertexConsumers, overlay, light);
+        // Render the planets of this star
+        for (Planet planet : blockEntity.getPlanets()) {
+            planet.render(matrices, vertexConsumers, overlay, light);
+        }
 
         // Mandatory call after GL calls
         matrices.pop();
